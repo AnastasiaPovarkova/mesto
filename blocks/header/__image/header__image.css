@@ -1,0 +1,7 @@
+.header__image {
+  width: 142px;
+  height: 33px;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 41px;
+}
