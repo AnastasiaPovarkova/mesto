@@ -1,0 +1,9 @@
+.popup__submit {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 358px;
+  height: 50px;
+  background-image: url(../../../images/popup__submit.png);
+  z-index: 1;
+}
