@@ -1,0 +1,10 @@
+.profile__name {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 16px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px; /* or 114% */
+}
