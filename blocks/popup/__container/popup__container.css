@@ -12,3 +12,13 @@
   padding: 34px 36px 37px;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 600px) {
+  .popup__container{
+    width: 282px;
+    height: 322px;
+    top: 123px;
+    left: calc(100% / 2 - 282px / 2);
+    padding: 25px 22px 25px;
+  }
+}

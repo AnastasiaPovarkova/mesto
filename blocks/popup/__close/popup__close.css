@@ -10,3 +10,13 @@
   top: calc(195px - 8px - 32px);
   left: calc(100% / 2 + 430px / 2 + 8px);
 }
+
+@media screen and (max-width: 600px) {
+  .popup__close{
+    width: 20px;
+    height: 20px;
+    top: 87px;
+    left: calc(100% / 2 + 282px / 2 - 20px);
+    background-image: url(../../../images/popup__close320.png);
+  }
+}
