@@ -4,6 +4,7 @@
   border: 0;
   width: 22px;
   height: 19px;
+  background: rgba(0, 0, 0, 0);
   background-image: url(../../../images/Element__like.svg);
   transition: opacity 0.3s;
 }
