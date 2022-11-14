@@ -1,4 +1,18 @@
 .element__like {
+  margin: 0;
+  padding: 0;
+  border: 0;
   width: 22px;
   height: 19px;
+  background-image: url(../../../images/Element__like.svg);
+  transition: opacity 0.3s;
+}
+
+.element__like:hover {
+  opacity: 0.5;
+}
+
+.element__like:active {
+  opacity: 1;
+  background-image: url(../../../images/AddButton_active.png);
 }
