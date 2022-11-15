@@ -21,4 +21,4 @@
 
 **GitHub Pages**
 
-* [Ссылка на GitHub Pages](https://anastasiapovarkova.github.io/russian-travel/)
+* [Ссылка на GitHub Pages](https://anastasiapovarkova.github.io/mesto/)
