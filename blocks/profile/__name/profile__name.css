@@ -1,7 +1,7 @@
 .profile__name {
   margin: 0;
   padding: 0;
-  max-width: 80%;
+  max-width: 90%;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
@@ -15,7 +15,7 @@
 @media screen and (max-width: 960px) {
   .profile__name{
     text-align: center;
-    margin-left: 42px;
+    justify-self: center;
   }
 }
 
@@ -23,6 +23,5 @@
   .profile__name{
     font-size: 27px;
     line-height: 33px;
-    margin-left: 28px;
   }
 }
