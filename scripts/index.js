@@ -24,7 +24,6 @@ let formElement = document.querySelector('.popup__container');
 // Находим поля формы в DOM
 let nameInput = formElement.querySelector('.popup__name');
 let jobInput = formElement.querySelector('.popup__profession');
-//const popupSubmit = popupElement.querySelector('.popup__submit');
 
 
 // Обработчик отправки формы

@@ -1,7 +1,7 @@
 .elements {
   width: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(3, calc(33.3% - 11.031px));
   column-gap: 17px;
   row-gap: 20px;
