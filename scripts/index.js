@@ -1,5 +1,3 @@
-console.log('Привет, мир!');
-
 //OPEN/CLOSE popup
 
 const popupElement = document.querySelector('.popup');
