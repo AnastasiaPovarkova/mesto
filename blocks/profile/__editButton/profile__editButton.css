@@ -9,6 +9,7 @@
   background-position: center;
   background-color: #000;
   border: 1px solid #FFFFFF;
+  cursor: pointer;
   transition: opacity 0.3s;
 }
 

@@ -7,6 +7,7 @@
   position: fixed;
   background: rgba(0, 0, 0, 0);
   background-image: url(../../../images/popup__close.png);
+  cursor: pointer;
   top: calc(195px - 8px - 32px);
   left: calc(100% / 2 + 430px / 2 + 8px);
 }

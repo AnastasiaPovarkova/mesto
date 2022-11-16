@@ -10,6 +10,7 @@
   background-image: url(../../../images/AddButton.svg);
   background-repeat: no-repeat;
   background-position: center;
+  cursor: pointer;
   transition: opacity 0.3s;
 }
 
