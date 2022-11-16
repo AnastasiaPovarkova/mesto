@@ -4,10 +4,10 @@
   width: 24px;
   height: 24px;
   margin-left: 18px;
+  background: rgba(0, 0, 0, 0);
   background-image: url(../../../images/EditButton.svg);
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #000;
   border: 1px solid #FFFFFF;
   cursor: pointer;
   transition: opacity 0.3s;
