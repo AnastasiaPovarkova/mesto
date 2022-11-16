@@ -2,7 +2,7 @@
 
 const popupElement = document.querySelector('.popup');
 const popupCloseButtonElement = popupElement.querySelector('.popup__close');
-const popupOpenButtonElement = document.querySelector('.profile__editButton');
+const popupOpenButtonElement = document.querySelector('.profile__edit-button');
 
 function openPopup() {
   popupElement.classList.add('popup_is-opened');
