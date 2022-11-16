@@ -6,7 +6,7 @@
   height: 32px;
   position: fixed;
   background: rgba(0, 0, 0, 0);
-  background-image: url(../../../images/popup__close.png);
+  background-image: url(../../../images/popup__close.svg);
   cursor: pointer;
   top: calc(195px - 8px - 32px);
   left: calc(100% / 2 + 430px / 2 + 8px);
@@ -18,6 +18,6 @@
     height: 20px;
     top: 87px;
     left: calc(100% / 2 + 282px / 2 - 20px);
-    background-image: url(../../../images/popup__close320.png);
+    background-image: url(../../../images/popup__close320.svg);
   }
 }
