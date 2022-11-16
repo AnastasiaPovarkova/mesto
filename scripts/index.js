@@ -6,6 +6,8 @@ const popupOpenButtonElement = document.querySelector('.profile__edit-button');
 
 function openPopup() {
   popupElement.classList.add('popup_is-opened');
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileProfession.textContent;
 }
 
 function closePopup() {
@@ -18,28 +20,22 @@ popupCloseButtonElement.addEventListener('click', closePopup);
 //SUBMIT
 
 // Находим форму в DOM
-let formElement = document.querySelector('.popup__container');
+let formElement = document.querySelector('.popup__content');
 // Находим поля формы в DOM
 let nameInput = formElement.querySelector('.popup__name');
 let jobInput = formElement.querySelector('.popup__profession');
+// Элементы, куда должны быть вставлены значения полей
+let profileName = document.querySelector('.profile__name');
+let profileProfession = document.querySelector('.profile__profession');
 
 
 // Обработчик отправки формы
 function formSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  console.log('Вызвалась функция');
-
-  // Получите значение полей jobInput и nameInput из свойства value
-  let nameValue = nameInput.value;
-  let jobValue = jobInput.value;
-
-  // Выберите элементы, куда должны быть вставлены значения полей
-  let profileName = document.querySelector('.profile__name');
-  let profileProfession = document.querySelector('.profile__profession');
   
   // Вставьте новые значения с помощью textContent
-  profileName.textContent = nameValue;
-  profileProfession.textContent = jobValue;
+  profileName.textContent = nameInput.value;
+  profileProfession.textContent = jobInput.value;
   closePopup();
 }
 
