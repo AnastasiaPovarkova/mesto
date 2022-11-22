@@ -81,10 +81,28 @@ const initialCards = [
   }
 ];
 
-
-//ADD CARDS
+//FIRST CARDS FROM JS
 
 const cardContainer = document.querySelector('.elements');
+
+initialCards.forEach(function (item) {
+  addCard(item.name, item.link);
+}
+);
+
+//LIKING
+
+function likeToggle () {
+  this.classList.toggle('element__like_liked');
+}
+
+const likes = document.querySelectorAll('.element__like');
+
+likes.forEach(function (like) {
+  like.addEventListener('click', likeToggle);
+});
+
+//ADD CARDS
 
 function addCard(cardName, link) {
   const cardTemplate = document.querySelector('#element-template').content;
@@ -92,6 +110,8 @@ function addCard(cardName, link) {
 
   cardElement.querySelector('.element__text').textContent = cardName;
   cardElement.querySelector('.element__image').src = link;
+
+  cardElement.querySelector('.element__like').addEventListener('click', likeToggle);
 
   cardContainer.prepend(cardElement);
 };
