@@ -79,7 +79,7 @@
     <p class="footer__copyright">&copy;&nbsp;2022 Mesto Russia</p>
   </footer> 
 
-  <div class="popup">
+  <div class="popup popup_edit-profile">
     <div class="popup__container">
       <button type="button" aria-label="Закрыть" class="popup__close"></button>
       <form name="popup__content" class="popup__content">
@@ -87,6 +87,18 @@
         <input type="text" class="popup__field popup__field_input_name" required placeholder="Ваше имя" name="name" value="Жак-Ив Кусто">
         <input type="text" class="popup__field popup__field_input_profession" required placeholder="Ваша профессия" name="profession" value="Исследователь океана">
         <button type="submit" class="popup__submit" name="submit" value="Сохранить">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_add-card">
+    <div class="popup__container">
+      <button type="button" aria-label="Закрыть" class="popup__close"></button>
+      <form name="popup__content" class="popup__content">
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" class="popup__field popup__field_input_card" required placeholder="Название" name="card" value="">
+        <input type="text" class="popup__field popup__field_input_ref" required placeholder="Ссылка на картинку" name="ref" value="">
+        <button type="submit" class="popup__submit" name="submit" value="Создать">Создать</button>
       </form>
     </div>
   </div>

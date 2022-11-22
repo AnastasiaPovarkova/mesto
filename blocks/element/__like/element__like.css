@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   border: 0;
-  width: 22px;
+  min-width: 22px;
   height: 19px;
   background: rgba(0, 0, 0, 0);
   background-image: url(../../../images/Element__like.svg);
