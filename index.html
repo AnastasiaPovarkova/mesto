@@ -29,7 +29,7 @@
     </section> 
 
     <section class="elements">
-      <div class="element">
+      <!--<div class="element">
         <img class="element__image" src="./images/Element__image1.png" alt="Карачаевск">
         <div class="element__group">
           <h2 class="element__text">Карачаевск</h2>
@@ -70,14 +70,24 @@
           <h2 class="element__text">Карачаево-Черкессия</h2>
           <button type="button" aria-label="Нравится" class="element__like"></button>
         </div>
-      </div>
-    </section>
+      </div> -->
+    </section> 
 
   </main> 
 
   <footer class="footer">
     <p class="footer__copyright">&copy;&nbsp;2022 Mesto Russia</p>
   </footer> 
+
+  <template id="element-template">
+    <div class="element">
+      <img class="element__image" src="./images/Element__image1.png" alt="фото">
+      <div class="element__group">
+        <h2 class="element__text"></h2>
+        <button type="button" aria-label="Нравится" class="element__like"></button>
+      </div>
+    </div>
+  </template>
 
   <div class="popup popup_edit-profile">
     <div class="popup__container">
@@ -96,8 +106,8 @@
       <button type="button" aria-label="Закрыть" class="popup__close"></button>
       <form name="popup__content" class="popup__content">
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" class="popup__field popup__field_input_card" required placeholder="Название" name="card" value="">
-        <input type="text" class="popup__field popup__field_input_ref" required placeholder="Ссылка на картинку" name="ref" value="">
+        <input type="text" class="popup__field popup__field_input_card" required placeholder="Название" name="cardName" value="">
+        <input type="text" class="popup__field popup__field_input_link" required placeholder="Ссылка на картинку" name="link" value="">
         <button type="submit" class="popup__submit" name="submit" value="Создать">Создать</button>
       </form>
     </div>
