@@ -6,4 +6,5 @@
   flex-direction: column;
   overflow: hidden;
   font-family: 'Inter', Arial, sans-serif;
+  position: relative;
 }
