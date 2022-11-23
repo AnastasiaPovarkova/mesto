@@ -6,23 +6,30 @@ const popupCloseButtonElementEditProfile = popupElementEditProfile.querySelector
 const popupCloseButtonElementAddCard = popupElementAddCard.querySelector('.popup__close');
 const popupOpenButtonElement = document.querySelector('.profile__edit-button');
 const popupAddButtonElement = document.querySelector('.profile__add-button');
+const popupElementOpenImage = document.querySelector('.popup_open-card');
+const popupCloseButtonElementOpenImage = popupElementOpenImage.querySelector('.popup__close');
 
 function openPopup(item) {
   item.classList.add('popup_is-opened');
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileProfession.textContent;
-  cardInput.value = '';
-  linkInput.value = '';
 }
 
 function closePopup(item) {
   item.classList.remove('popup_is-opened');
 }
 
-popupOpenButtonElement.addEventListener('click', function(){openPopup(popupElementEditProfile)});
-popupAddButtonElement.addEventListener('click', function(){openPopup(popupElementAddCard)});
+popupOpenButtonElement.addEventListener('click', function(){
+  openPopup(popupElementEditProfile)
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileProfession.textContent;});
+
+popupAddButtonElement.addEventListener('click', function(){
+  openPopup(popupElementAddCard)
+  cardInput.value = '';
+  linkInput.value = '';});
+
 popupCloseButtonElementEditProfile.addEventListener('click', function(){closePopup(popupElementEditProfile)});
 popupCloseButtonElementAddCard.addEventListener('click', function(){closePopup(popupElementAddCard)});
+popupCloseButtonElementOpenImage.addEventListener('click', function(){closePopup(popupElementOpenImage)})
 
 
 //PROFILE EDIT SUBMIT
@@ -103,6 +110,10 @@ function deleteCard () {
   card.remove();
 }; 
 
+//OPEN IMAGE
+
+const popupElementImage = popupElementOpenImage.querySelector('.popup__image');
+const popupElementText = popupElementOpenImage.querySelector('.popup__text');
 
 
 //ADD CARD
@@ -116,6 +127,11 @@ function addCard(cardName, link) {
 
   cardElement.querySelector('.element__like').addEventListener('click', likeToggle);
   cardElement.querySelector('.element__trash').addEventListener('click', deleteCard);
+  cardElement.querySelector('.element__image').addEventListener('click', function(){
+    openPopup(popupElementOpenImage);
+    popupElementImage.src = link;
+    popupElementText.textContent = cardName;
+  });
 
   cardContainer.prepend(cardElement);
 };
