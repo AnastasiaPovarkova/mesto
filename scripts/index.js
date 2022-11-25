@@ -1,4 +1,4 @@
-//OPEN/CLOSE popups
+//------CONSTS
 
 const popupElementEditProfile = document.querySelector('.popup_edit-profile');
 const popupElementAddCard = document.querySelector('.popup_add-card');
@@ -9,145 +9,135 @@ const popupAddButtonElement = document.querySelector('.profile__add-button');
 const popupElementOpenImage = document.querySelector('.popup_open-card');
 const popupCloseButtonElementOpenImage = popupElementOpenImage.querySelector('.popup__close');
 
+const formElementEditProfile = popupElementEditProfile.querySelector('.popup__content');
+const nameInput = formElementEditProfile.querySelector('.popup__field_input_name');
+const jobInput = formElementEditProfile.querySelector('.popup__field_input_profession');
+const profileName = document.querySelector('.profile__name');
+const profileProfession = document.querySelector('.profile__profession');
+
+const cardContainer = document.querySelector('.elements');
+const popupElementImage = popupElementOpenImage.querySelector('.popup__image');
+const popupElementText = popupElementOpenImage.querySelector('.popup__text');
+
+const formElementAddCard = popupElementAddCard.querySelector('.popup__content');
+const cardInput = formElementAddCard.querySelector('.popup__field_input_card');
+const linkInput = formElementAddCard.querySelector('.popup__field_input_link');
+
+const cardTemplate = document.querySelector('#element-template').content;
+
+
+//-------FUNCTIONS
+
+
+//OPEN POPUP
 function openPopup(item) {
   item.classList.add('popup_is-opened');
 }
 
+//CLOSE POPUP
 function closePopup(item) {
   item.classList.remove('popup_is-opened');
 }
 
-popupOpenButtonElement.addEventListener('click', function(){
-  openPopup(popupElementEditProfile)
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileProfession.textContent;});
-
-popupAddButtonElement.addEventListener('click', function(){
-  openPopup(popupElementAddCard)
-  cardInput.value = '';
-  linkInput.value = '';});
-
-popupCloseButtonElementEditProfile.addEventListener('click', function(){closePopup(popupElementEditProfile)});
-popupCloseButtonElementAddCard.addEventListener('click', function(){closePopup(popupElementAddCard)});
-popupCloseButtonElementOpenImage.addEventListener('click', function(){closePopup(popupElementOpenImage)})
-
-
-//PROFILE EDIT SUBMIT
-
-// Находим форму в DOM
-let formElementEditProfile = popupElementEditProfile.querySelector('.popup__content');
-// Находим поля формы в DOM
-let nameInput = formElementEditProfile.querySelector('.popup__field_input_name');
-let jobInput = formElementEditProfile.querySelector('.popup__field_input_profession');
-// Элементы, куда должны быть вставлены значения полей
-let profileName = document.querySelector('.profile__name');
-let profileProfession = document.querySelector('.profile__profession');
-
-
-// Обработчик отправки формы
-function formSubmitHandler (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  
-  profileName.textContent = nameInput.value;
-  profileProfession.textContent = jobInput.value;
-  closePopup(popupElementEditProfile);
-}
-
-// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-formElementEditProfile.addEventListener('submit', formSubmitHandler); 
-
-
-//CARDS
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-//FIRST CARDS FROM JS
-
-const cardContainer = document.querySelector('.elements');
-
-initialCards.forEach(function (item) {
-  addCard(item.name, item.link);
-}
-);
-
-
 //LIKING
-
 function likeToggle () {
   this.classList.toggle('element__like_liked');
 }
 
-
 //DELETE CARD
-
 function deleteCard () {
   const card = this.closest('.element');
   card.remove();
 }; 
 
-//OPEN IMAGE
+//ADD LINK AND NAME TO IMAGE
+function addLinkAndNameToImage (link, cardName) {
+  popupElementImage.src = link;
+  popupElementImage.alt = cardName;
+  popupElementText.textContent = cardName;
+}
 
-const popupElementImage = popupElementOpenImage.querySelector('.popup__image');
-const popupElementText = popupElementOpenImage.querySelector('.popup__text');
-
-
-//ADD CARD
-
-function addCard(cardName, link) {
-  const cardTemplate = document.querySelector('#element-template').content;
+//CREATE CARD
+function createCard(cardName, link) {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+  const cardElementText = cardElement.querySelector('.element__text');
+  const cardElementImage = cardElement.querySelector('.element__image');
 
-  cardElement.querySelector('.element__text').textContent = cardName;
-  cardElement.querySelector('.element__image').src = link;
+  cardElementText.textContent = cardName;
+  cardElementImage.src = link;
+  cardElementImage.alt = cardName;
 
   cardElement.querySelector('.element__like').addEventListener('click', likeToggle);
   cardElement.querySelector('.element__trash').addEventListener('click', deleteCard);
   cardElement.querySelector('.element__image').addEventListener('click', function(){
     openPopup(popupElementOpenImage);
-    popupElementImage.src = link;
-    popupElementText.textContent = cardName;
+    addLinkAndNameToImage(link, cardName);
   });
 
-  cardContainer.prepend(cardElement);
+  addCard(cardElement);
 };
 
+//ADD CARD
+function addCard(card) {
+  cardContainer.prepend(card);
+}
 
-//ADD CARD SUBMIT
+//WRITE NAME AND JOB TO PROFILE
+function writeNameAndJobToProfile () {
+  profileName.textContent = nameInput.value;
+  profileProfession.textContent = jobInput.value;
+}
 
-let formElementAddCard = popupElementAddCard.querySelector('.popup__content');
-let cardInput = formElementAddCard.querySelector('.popup__field_input_card');
-let linkInput = formElementAddCard.querySelector('.popup__field_input_link');
+//WRITE NAME AND JOB TO FORM
+function writeNameAndJobToForm () {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileProfession.textContent;
+}
 
-function formSubmitHandlerForAdd (evt) {
+
+
+//------POPUP SUBMIT
+
+// Обработчик отправки формы профиля
+function handleProfileFormSubmit (evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  writeNameAndJobToProfile();
+  closePopup(popupElementEditProfile);
+}
+
+//Обработчик отправки формы добавления карточки
+function handleAddFormSubmit (evt) {
   evt.preventDefault(); 
-  
-  addCard(cardInput.value, linkInput.value)
+  createCard(cardInput.value, linkInput.value);
   closePopup(popupElementAddCard);
 }
 
-formElementAddCard.addEventListener('submit', formSubmitHandlerForAdd); 
+
+
+//-------EVENT LISTENERS
+
+//first cards
+initialCards.forEach(function (item) {
+  createCard(item.name, item.link);
+}
+);
+
+//open popups
+popupOpenButtonElement.addEventListener('click', function() {
+  openPopup(popupElementEditProfile);
+  writeNameAndJobToForm();
+});
+
+popupAddButtonElement.addEventListener('click', function() {
+  openPopup(popupElementAddCard);
+  formElementAddCard.reset(); 
+});
+
+//close popups
+popupCloseButtonElementEditProfile.addEventListener('click', function(){closePopup(popupElementEditProfile)});
+popupCloseButtonElementAddCard.addEventListener('click', function(){closePopup(popupElementAddCard)});
+popupCloseButtonElementOpenImage.addEventListener('click', function(){closePopup(popupElementOpenImage)})
+
+//submit listener
+formElementEditProfile.addEventListener('submit', handleProfileFormSubmit); 
+formElementAddCard.addEventListener('submit', handleAddFormSubmit); 
