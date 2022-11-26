@@ -51,10 +51,11 @@ function deleteCard () {
 }; 
 
 //ADD LINK AND NAME TO IMAGE
-function addLinkAndNameToImage (link, cardName) {
+function handleOpenImage (link, cardName) {
   popupElementImage.src = link;
   popupElementImage.alt = cardName;
   popupElementText.textContent = cardName;
+  openPopup(popupElementOpenImage);
 }
 
 //CREATE CARD
@@ -70,16 +71,15 @@ function createCard(cardName, link) {
   cardElement.querySelector('.element__like').addEventListener('click', likeToggle);
   cardElement.querySelector('.element__trash').addEventListener('click', deleteCard);
   cardElement.querySelector('.element__image').addEventListener('click', function(){
-    openPopup(popupElementOpenImage);
-    addLinkAndNameToImage(link, cardName);
+    handleOpenImage(link, cardName);
   });
 
-  addCard(cardElement);
+  return cardElement;
 };
 
 //ADD CARD
-function addCard(card) {
-  cardContainer.prepend(card);
+function addCard(container, card) {
+  container.prepend(card);
 }
 
 //WRITE NAME AND JOB TO PROFILE
@@ -108,7 +108,7 @@ function handleProfileFormSubmit (evt) {
 //Обработчик отправки формы добавления карточки
 function handleAddFormSubmit (evt) {
   evt.preventDefault(); 
-  createCard(cardInput.value, linkInput.value);
+  addCard(cardContainer, createCard(cardInput.value, linkInput.value));
   closePopup(popupElementAddCard);
 }
 
@@ -118,7 +118,7 @@ function handleAddFormSubmit (evt) {
 
 //first cards
 initialCards.forEach(function (item) {
-  createCard(item.name, item.link);
+  addCard(cardContainer, createCard(item.name, item.link));
 }
 );
 
