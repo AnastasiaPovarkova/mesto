@@ -25,6 +25,8 @@ const linkInput = formElementAddCard.querySelector('.popup__field_input_link');
 
 const cardTemplate = document.querySelector('#element-template').content;
 
+const allPopups = document.querySelectorAll('.popup');
+
 
 //-------FUNCTIONS
 
@@ -141,3 +143,101 @@ popupCloseButtonElementOpenImage.addEventListener('click', function(){closePopup
 //submit listener
 formElementEditProfile.addEventListener('submit', handleProfileFormSubmit); 
 formElementAddCard.addEventListener('submit', handleAddFormSubmit); 
+
+
+//close popup if click on overlay
+allPopups.forEach((popup) => {
+  popup.addEventListener('click', function (evt) {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(popup);
+    }
+  });
+});
+
+//close popup if press Esc
+allPopups.forEach((popup) => {
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    }
+  });
+});
+
+
+
+
+
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__field_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__field_error_active');
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__field_type_error');
+  errorElement.classList.remove('popup__field_error_active');
+  errorElement.textContent = '';
+};
+
+
+const hasInvalidInput = (inputList) => {
+  // проходим по этому массиву методом some
+  return inputList.some((inputElement) => {
+    // Если поле не валидно, колбэк вернёт true
+    // Обход массива прекратится и вся функция
+    // hasInvalidInput вернёт true
+
+    return !inputElement.validity.valid;
+  })
+}; 
+
+const toggleButtonState = (inputList, buttonElement) => {
+  // Если есть хотя бы один невалидный инпут
+  if (hasInvalidInput(inputList)) {
+    // сделай кнопку неактивной
+    buttonElement.classList.add('popup__submit_inactive');
+    buttonElement.setAttribute("disabled", "disabled");
+  } else {
+    // иначе сделай кнопку активной
+    buttonElement.classList.remove('popup__submit_inactive');
+    buttonElement.removeAttribute("disabled", "disabled");
+  }
+}; 
+
+// Функция, которая проверяет валидность поля
+const isFieldValid = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__field'));
+  const buttonElement = formElement.querySelector('.popup__submit');
+
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      isFieldValid(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__content'));
+
+  formList.forEach((formElement) => {
+    setEventListeners(formElement);
+  });
+};
+
+enableValidation(); 
+
