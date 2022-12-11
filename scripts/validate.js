@@ -23,7 +23,7 @@ const settings = {
     errorElement.textContent = '';
   };
   
-  
+  //Проверка каждого поля на валидность для сабмита
   const hasInvalidInput = (inputList) => {
     return inputList.some((inputElement) => {
       // Если поле не валидно, колбэк вернёт true
@@ -45,7 +45,7 @@ const settings = {
     }
   }; 
   
-  // Функция, которая проверяет валидность инпута
+  // Функция, проверяющая валидность инпута
   const isFieldValid = (formElement, inputElement) => {
     if (!inputElement.validity.valid) {
       showInputError(formElement, inputElement, inputElement.validationMessage);
