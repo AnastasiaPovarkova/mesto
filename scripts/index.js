@@ -16,8 +16,8 @@ const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
 
 const cardContainer = document.querySelector('.elements');
-const popupElementImage = popupElementOpenImage.querySelector('.popup__image');
-const popupElementText = popupElementOpenImage.querySelector('.popup__text');
+//const popupElementImage = popupElementOpenImage.querySelector('.popup__image');
+//const popupElementText = popupElementOpenImage.querySelector('.popup__text');
 
 const formElementAddCard = popupElementAddCard.querySelector('.popup__content');
 const cardInput = formElementAddCard.querySelector('.popup__field_input_card');
@@ -28,6 +28,72 @@ const cardTemplate = document.querySelector('#element-template').content;
 
 const allPopups = document.querySelectorAll('.popup');
 
+
+//CLASSES
+
+class Card {
+
+  constructor(name, link, templateSelector) {
+    this._name = name;
+    this._link = link;
+    this._templateSelector = templateSelector;
+  }
+
+  _getTemplate() {
+    const templateClone = document
+    .querySelector(this._templateSelector)
+    .content
+    .querySelector('.element')
+    .cloneNode(true);
+    
+  // вернём DOM-элемент карточки
+    return templateClone;
+  }
+
+  generateCard() {
+    // Запишем разметку в приватное поле _element. 
+    // Так у других элементов появится доступ к ней.
+    this._element = this._getTemplate();
+    this._setEventListeners(); //обработчики
+  
+    // Добавим данные
+    this._element.querySelector('.element__text').textContent = this._name;
+    this._element.querySelector('.element__image').src = this._link;
+    this._element.querySelector('.element__image').alt = this._name;
+  
+    // Вернём элемент наружу
+    return this._element;
+  }
+
+  _setEventListeners() {
+    this._element.querySelector('.element__like').addEventListener('click', () => {
+      this._likeToggle();
+    });
+    this._element.querySelector('.element__trash').addEventListener('click', () => {
+      this._deleteCard();
+    });
+    this._element.querySelector('.element__image').addEventListener('click', () => {
+      this._handleOpenImage();
+    });
+  }
+
+  _likeToggle() {
+    this._element.querySelector('.element__like').classList.toggle('element__like_liked');
+  }
+
+  _deleteCard() {
+    this._element.closest('.element').remove();
+  }
+
+  _handleOpenImage() {
+    document.querySelector('.popup__image').src = this._link;
+    document.querySelector('.popup__image').alt = this._name;
+    document.querySelector('.popup__text').textContent = this._name;
+    const openCard = document.querySelector('.popup_open-card');
+    openPopup(openCard);
+  }
+
+}
 
 //-------FUNCTIONS
 
@@ -52,26 +118,26 @@ function closePopup(item) {
 }
 
 //LIKING
-function likeToggle (evt) {
+/*function likeToggle (evt) {
   evt.target.classList.toggle('element__like_liked');
-}
+}*/
 
 //DELETE CARD
-function deleteCard (evt) {
+/*function deleteCard (evt) {
   const card = evt.target.closest('.element');
   card.remove();
-}; 
+}; */
 
 //ADD LINK AND NAME TO IMAGE
-function handleOpenImage (link, cardName) {
+/*function handleOpenImage (link, cardName) {
   popupElementImage.src = link;
   popupElementImage.alt = cardName;
   popupElementText.textContent = cardName;
   openPopup(popupElementOpenImage);
-}
+}*/
 
 //CREATE CARD
-function createCard(cardName, link) {
+/*function createCard(cardName, link) {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   const cardElementText = cardElement.querySelector('.element__text');
   const cardElementImage = cardElement.querySelector('.element__image');
@@ -87,12 +153,12 @@ function createCard(cardName, link) {
   });
 
   return cardElement;
-};
+};*/
 
 //ADD CARD
-function addCard(container, card) {
+/*function addCard(container, card) {
   container.prepend(card);
-}
+}*/
 
 //WRITE NAME AND JOB TO PROFILE
 function writeNameAndJobToProfile () {
@@ -112,7 +178,7 @@ function writeNameAndJobToForm () {
 
 // Обработчик отправки формы профиля
 function handleProfileFormSubmit (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  evt.preventDefault(); // отменяем стандартную отправку формы.
   writeNameAndJobToProfile();
   closePopup(popupElementEditProfile);
 }
@@ -120,7 +186,10 @@ function handleProfileFormSubmit (evt) {
 //Обработчик отправки формы добавления карточки
 function handleAddFormSubmit (evt) {
   evt.preventDefault(); 
-  addCard(cardContainer, createCard(cardInput.value, linkInput.value));
+  const card = new Card(cardInput.value, linkInput.value, '#element-template');
+  const myCardElement = card.generateCard();
+  cardContainer.prepend(myCardElement);
+  //addCard(cardContainer, createCard(cardInput.value, linkInput.value));
   closePopup(popupElementAddCard);
 }
 
@@ -128,10 +197,13 @@ function handleAddFormSubmit (evt) {
 //-------EVENT LISTENERS
 
 //first cards
-initialCards.forEach(function (item) {
-  addCard(cardContainer, createCard(item.name, item.link));
-}
-);
+initialCards.forEach((item) => {
+  const card = new Card(item.name, item.link, '#element-template'); // Создадим экземпляр карточки
+  const myCardElement = card.generateCard(); // Создаём карточку и возвращаем наружу
+  cardContainer.prepend(myCardElement);
+
+  //addCard(cardContainer, createCard(item.name, item.link));
+});
 
 //open popups
 popupOpenButtonElement.addEventListener('click', function() {
