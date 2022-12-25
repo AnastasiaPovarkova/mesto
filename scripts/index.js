@@ -24,17 +24,35 @@ const cardInput = formElementAddCard.querySelector('.popup__field_input_card');
 const linkInput = formElementAddCard.querySelector('.popup__field_input_link');
 const addCardPopupSubmitButton = formElementAddCard.querySelector('.popup__submit');
 
-//const cardTemplate = document.querySelector('#element-template').content;
 const allPopups = document.querySelectorAll('.popup');
+
+const settings = {
+  formSelector: '.popup__content',
+  inputSelector: '.popup__field',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_inactive',
+  inputErrorClass: 'popup__field_type_error',
+  errorClass: 'popup__field_error_active'
+}
+
+const formList = Array.from(document.querySelectorAll(settings.formSelector));
+import {initialCards} from './initial-сards.js'
 
 export {popupElementOpenImage as popupCardOpen, popupElementImage as image, popupElementText as text};
 
 
 //-------CLASSES
 import {Card} from './card.js';
+import {FormValidator} from './validate.js';
 
 
 //-------FUNCTIONS
+
+//validation
+formList.forEach((item) => {
+  const formValidator = new FormValidator(settings, item);
+  formValidator.enableValidation();
+});
 
 //close popup if press Esc
 function closeByEsc(evt) {
