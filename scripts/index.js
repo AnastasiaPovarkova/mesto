@@ -42,8 +42,8 @@ export {popupElementOpenImage as popupCardOpen, popupElementImage as image, popu
 
 
 //-------CLASSES
-import {Card} from './card.js';
-import {FormValidator} from './validate.js';
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
 
 
 //-------FUNCTIONS
