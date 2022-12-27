@@ -38,8 +38,6 @@ const settings = {
 const formList = Array.from(document.querySelectorAll(settings.formSelector));
 import {initialCards} from './initial-сards.js'
 
-export {popupElementOpenImage as popupCardOpen, popupElementImage as image, popupElementText as text};
-
 
 //-------CLASSES
 import {Card} from './Card.js';
@@ -47,6 +45,23 @@ import {FormValidator} from './FormValidator.js';
 
 
 //-------FUNCTIONS
+
+//open card
+function handleCardClick(name, link) {
+  popupElementImage.src = link;//устанавливаем ссылку
+  popupElementImage.alt = name;
+  popupElementText.textContent = name;//устанавливаем подпись картинке
+  openPopup(popupElementOpenImage);//открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+}
+
+//create card
+function createCard(name, link) {
+  const card = new Card(name, link, '#element-template', handleCardClick); // Создадим экземпляр карточки по классу Card
+  const myCardElement = card.generateCard(); // Создаём карточку и возвращаем наружу
+  return myCardElement 
+}
+
+
 
 //validation
 formList.forEach((item) => {
@@ -63,7 +78,7 @@ function closeByEsc(evt) {
 }
 
 //open popup
-export function openPopup(item) {
+function openPopup(item) {
   item.classList.add('popup_is-opened');
   document.addEventListener('keydown', closeByEsc);
 }
@@ -100,20 +115,16 @@ function handleProfileFormSubmit (evt) {
 //Обработчик отправки формы добавления карточки
 function handleAddFormSubmit (evt) {
   evt.preventDefault(); 
-  const card = new Card(cardInput.value, linkInput.value, '#element-template');
-  const myCardElement = card.generateCard();
-  cardContainer.prepend(myCardElement);
+  cardContainer.prepend(createCard(cardInput.value, linkInput.value));
   closePopup(popupElementAddCard);
 }
 
 
 //-------EVENT LISTENERS
 
-//first cards
+//display first cards
 initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link, '#element-template'); // Создадим экземпляр карточки по классу Card
-  const myCardElement = card.generateCard(); // Создаём карточку и возвращаем наружу
-  cardContainer.prepend(myCardElement);
+  cardContainer.prepend(createCard(item.name, item.link));
 });
 
 //open popups

@@ -1,15 +1,10 @@
-import { popupCardOpen, image, text } from './index.js';
-import { openPopup } from './index.js';
-
 export class Card {
 
-    constructor(name, link, templateSelector) {
+    constructor(name, link, templateSelector, handleCardClick) {
       this._name = name;
       this._link = link;
       this._templateSelector = templateSelector;
-      this._image = image;
-      this._text = text;
-      this._popupCardOpen = popupCardOpen;
+      this._handleCardClick = handleCardClick;
     }
   
     _getTemplate() {
@@ -24,41 +19,35 @@ export class Card {
   
     generateCard() {
       this._element = this._getTemplate(); // Запишем разметку в приватное поле _element. Так у других элементов появится доступ к ней.
-      this._setEventListeners(); //обработчики
+      this._cardImage = this._element.querySelector('.element__image');
+      this._likeButton = this._element.querySelector('.element__like');
+      this._setEventListeners();
     
       this._element.querySelector('.element__text').textContent = this._name;
-      this._element.querySelector('.element__image').src = this._link;
-      this._element.querySelector('.element__image').alt = this._name;
+      this._cardImage.src = this._link;
+      this._cardImage.alt = this._name;
     
       return this._element; // Вернём элемент наружу
     }
   
     _setEventListeners() {
-      this._element.querySelector('.element__like').addEventListener('click', () => {
+      this._likeButton.addEventListener('click', () => {
         this._likeToggle();
       });
       this._element.querySelector('.element__trash').addEventListener('click', () => {
         this._deleteCard();
       });
-      this._element.querySelector('.element__image').addEventListener('click', () => {
-        this._handleOpenImage();
+      this._cardImage.addEventListener('click', () => {
+        this._handleCardClick(this._name, this._link);
       });
     }
   
     _likeToggle() {
-      this._element.querySelector('.element__like').classList.toggle('element__like_liked');
+      this._likeButton.classList.toggle('element__like_liked');
     }
   
     _deleteCard() {
       this._element.closest('.element').remove();
     }
-  
-    _handleOpenImage() {
-      this._image.src = this._link;
-      this._image.alt = this._name;
-      this._text.textContent = this._name;
-      openPopup(this._popupCardOpen);
-    }
-  
 }
 
