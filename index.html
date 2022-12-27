@@ -52,7 +52,7 @@
   <div class="popup popup_edit-profile">
     <div class="popup__container">
       <button type="button" aria-label="Закрыть" class="popup__close"></button>
-      <form name="popup__profile-content" class="popup__content" novalidate>
+      <form name="popup__profile-content" id="popup__profile-content" class="popup__content" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
         <input type="text" id="name-field" class="popup__field popup__field_input_name" minlength="2" maxlength="40" required placeholder="Ваше имя" name="name" value="Жак-Ив Кусто">
         <span class="name-field-error popup__field-error"></span>
@@ -66,7 +66,7 @@
   <div class="popup popup_add-card">
     <div class="popup__container">
       <button type="button" aria-label="Закрыть" class="popup__close"></button>
-      <form name="popup__card-content" class="popup__content" novalidate>
+      <form name="popup__card-content" id="popup__card-content" class="popup__content" novalidate>
         <h2 class="popup__title">Новое место</h2>
         <input type="text" id="card-field" class="popup__field popup__field_input_card" minlength="2" maxlength="30" required placeholder="Название" name="cardName" value="">
         <span class="card-field-error popup__field-error"></span>

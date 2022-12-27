@@ -35,13 +35,13 @@ const settings = {
   errorClass: 'popup__field_error_active'
 }
 
-const formList = Array.from(document.querySelectorAll(settings.formSelector));
+//const formList = Array.from(document.querySelectorAll(settings.formSelector));
 import {initialCards} from './initial-сards.js'
 
 
 //-------CLASSES
 import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
+import {ProfileFormValidator, CardFormValidator} from './FormValidator.js';
 
 
 //-------FUNCTIONS
@@ -61,13 +61,6 @@ function createCard(name, link) {
   return myCardElement 
 }
 
-
-
-//validation
-formList.forEach((item) => {
-  const formValidator = new FormValidator(settings, item);
-  formValidator.enableValidation();
-});
 
 //close popup if press Esc
 function closeByEsc(evt) {
@@ -127,21 +120,25 @@ initialCards.forEach((item) => {
   cardContainer.prepend(createCard(item.name, item.link));
 });
 
+//validation for profile form
+const formProfileValidator = new ProfileFormValidator(settings);
+formProfileValidator.enableValidation();
+
+//validation for card form
+const formCardValidator = new CardFormValidator(settings);
+formCardValidator.enableValidation();
+
 //open popups
 popupOpenButtonElement.addEventListener('click', function() {
   openPopup(popupElementEditProfile);
   writeNameAndJobToForm();
-  //resetSpan(popupElementEditProfile);
-  //resetRedLine(popupElementEditProfile);
+  formProfileValidator.resetValidation();
 });
 
 popupAddButtonElement.addEventListener('click', function() {
   openPopup(popupElementAddCard);
   formElementAddCard.reset(); 
-  //resetSpan(popupElementAddCard);
-  //resetRedLine(popupElementAddCard);
-  addCardPopupSubmitButton.classList.add('popup__submit_inactive');
-  addCardPopupSubmitButton.setAttribute("disabled", "disabled");
+  formCardValidator.resetValidation();
 });
 
 //close popups

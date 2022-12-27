@@ -8,11 +8,7 @@ export class Card {
     }
   
     _getTemplate() {
-      const templateClone = document
-      .querySelector(this._templateSelector)
-      .content
-      .querySelector('.element')
-      .cloneNode(true);
+      const templateClone = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
       
       return templateClone;  // вернём DOM-элемент карточки
     }
@@ -50,4 +46,3 @@ export class Card {
       this._element.closest('.element').remove();
     }
 }
-

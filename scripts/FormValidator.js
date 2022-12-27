@@ -1,13 +1,8 @@
-export class FormValidator {
-  constructor(parameters, formElement) {
-    this._inputSelector = parameters.inputSelector;
-    this._submitButtonSelector = parameters.submitButtonSelector;
+class FormValidator {
+  constructor(parameters) {
     this._inactiveButtonClass = parameters.inactiveButtonClass;
     this._inputErrorClass = parameters.inputErrorClass;
     this._errorClass = parameters.errorClass;
-    this._formElement = formElement;
-    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
   }
 
   enableValidation() {
@@ -66,17 +61,38 @@ export class FormValidator {
   }
 }
 
-/* //Сброс ошибки (при открытии попапа)
-function resetSpan (popupElement) {
-  const spanlist = Array.from(popupElement.querySelectorAll('.popup__field-error'));
-  spanlist.forEach((spanInput) => {
-    spanInput.textContent = '';
-  });
+
+export class ProfileFormValidator extends FormValidator {
+  constructor(settings) {
+    super(settings);
+    this._formElement = document.querySelector('#popup__profile-content');
+    this._buttonElement = this._formElement.querySelector('.popup__submit');
+    this._inputList = Array.from(this._formElement.querySelectorAll('.popup__field'));
+  }
+
+  resetValidation() {
+    this._toggleButtonState();// управляем кнопкой 
+    
+    this._inputList.forEach((item) => {
+      this._hideInputError(item) // очищаем ошибки 
+    });
+  }
 }
-//Сброс подсветки красной линии инпута (при открытии попапа)
-function resetRedLine (popupElement) {
-  const inputlist = Array.from(popupElement.querySelectorAll('.popup__field'));
-  inputlist.forEach((input) => {
-    input.classList.remove('popup__field_type_error');
-  });
-}*/
+
+
+export class CardFormValidator extends FormValidator {
+  constructor(settings) {
+    super(settings);
+    this._formElement = document.querySelector('#popup__card-content');
+    this._buttonElement = this._formElement.querySelector('.popup__submit');
+    this._inputList = Array.from(this._formElement.querySelectorAll('.popup__field'));
+  }
+
+  resetValidation() {
+    this._toggleButtonState();// управляем кнопкой 
+    
+    this._inputList.forEach((item) => {
+      this._hideInputError(item) // очищаем ошибки 
+    });
+  }
+}
