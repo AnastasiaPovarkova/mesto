@@ -92,7 +92,7 @@ export class CardFormValidator extends FormValidator {
     this._toggleButtonState();// управляем кнопкой 
     
     this._inputList.forEach((item) => {
-      this._hideInputError(item) // очищаем ошибки 
+      this._hideInputError(item)// очищаем ошибки 
     });
   }
 }
