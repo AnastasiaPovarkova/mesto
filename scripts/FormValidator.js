@@ -1,12 +1,25 @@
-class FormValidator {
-  constructor(parameters) {
+export class FormValidator {
+  constructor(parameters, formElement) {
+    this._inputSelector = parameters.inputSelector;
+    this._submitButtonSelector = parameters.submitButtonSelector;
     this._inactiveButtonClass = parameters.inactiveButtonClass;
     this._inputErrorClass = parameters.inputErrorClass;
     this._errorClass = parameters.errorClass;
+    this._formElement = formElement;
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
   }
 
   enableValidation() {
     this._setEventListeners();
+  }
+
+  resetValidation() {
+    this._toggleButtonState();
+    
+    this._inputList.forEach((item) => {
+      this._hideInputError(item) // очищаем ошибки 
+    });
   }
 
   _setEventListeners() {
@@ -58,41 +71,5 @@ class FormValidator {
     inputElement.classList.remove(this._inputErrorClass);
     this._errorElement.classList.remove(this._errorClass);
     this._errorElement.textContent = '';
-  }
-}
-
-
-export class ProfileFormValidator extends FormValidator {
-  constructor(settings) {
-    super(settings);
-    this._formElement = document.querySelector('#popup__profile-content');
-    this._buttonElement = this._formElement.querySelector('.popup__submit');
-    this._inputList = Array.from(this._formElement.querySelectorAll('.popup__field'));
-  }
-
-  resetValidation() {
-    this._toggleButtonState();// управляем кнопкой 
-    
-    this._inputList.forEach((item) => {
-      this._hideInputError(item) // очищаем ошибки 
-    });
-  }
-}
-
-
-export class CardFormValidator extends FormValidator {
-  constructor(settings) {
-    super(settings);
-    this._formElement = document.querySelector('#popup__card-content');
-    this._buttonElement = this._formElement.querySelector('.popup__submit');
-    this._inputList = Array.from(this._formElement.querySelectorAll('.popup__field'));
-  }
-
-  resetValidation() {
-    this._toggleButtonState();// управляем кнопкой 
-    
-    this._inputList.forEach((item) => {
-      this._hideInputError(item)// очищаем ошибки 
-    });
   }
 }

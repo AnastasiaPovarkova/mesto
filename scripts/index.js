@@ -34,7 +34,7 @@ import {initialCards} from './initial-сards.js'
 
 //-------CLASSES
 import {Card} from './Card.js';
-import {ProfileFormValidator, CardFormValidator} from './FormValidator.js';
+import {FormValidator} from './FormValidator.js';
 
 
 //-------FUNCTIONS
@@ -105,18 +105,11 @@ const formValidators = {}
 const enableValidationn = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
     const formName = formElement.getAttribute('name'); // получаем данные из атрибута `name` у формы
 
-    if (formName === 'popup__profile-content') {
-      const validator = new ProfileFormValidator(config);
-      formValidators[formName] = validator;
-      validator.enableValidation();
-    } else if (formName === 'popup__card-content') {
-      const validator = new CardFormValidator(config);
-      formValidators[formName] = validator;
-      validator.enableValidation();
-    }
-    
+    formValidators[formName] = validator;
+    validator.enableValidation();
   });
 };
 
