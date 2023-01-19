@@ -1,36 +1,9 @@
-//------CONSTS
+import { settings, popupElementEditProfile, popupElementAddCard, popupOpenButtonElement, 
+  popupAddButtonElement, popupElementOpenImage, nameInput, jobInput } from './constants.js'
+import { initialCards } from './initial-сards.js'
 
-const popupElementEditProfile = document.querySelector('.popup_edit-profile');
-const popupElementAddCard = document.querySelector('.popup_add-card');
-const popupOpenButtonElement = document.querySelector('.profile__edit-button');
-const popupAddButtonElement = document.querySelector('.profile__add-button');
-const popupElementOpenImage = document.querySelector('.popup_open-card');
-
-const formElementEditProfile = popupElementEditProfile.querySelector('.popup__content');
-export const nameInput = formElementEditProfile.querySelector('.popup__field_input_name');
-export const jobInput = formElementEditProfile.querySelector('.popup__field_input_profession');
-export const profileName = document.querySelector('.profile__name');
-export const profileProfession = document.querySelector('.profile__profession');
-
-export const popupElementImage = popupElementOpenImage.querySelector('.popup__image');
-export const popupElementText = popupElementOpenImage.querySelector('.popup__text');
-
-
-const settings = {
-  formSelector: '.popup__content',
-  inputSelector: '.popup__field',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_inactive',
-  inputErrorClass: 'popup__field_type_error',
-  errorClass: 'popup__field_error_active'
-}
-
-import {initialCards} from './initial-сards.js'
-
-
-//-------CLASSES
 import Card from './Card.js';
-import {FormValidator} from './FormValidator.js';
+import FormValidator from './FormValidator.js';
 
 import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
@@ -38,18 +11,18 @@ import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js';
 
 
-//-------FUNCTIONS
+//Listeners 
+const popupWithEditForm = new PopupWithForm(popupElementEditProfile, handleProfileFormSubmit);
+popupWithEditForm.setEventListeners();
+const popupWithAddForm = new PopupWithForm(popupElementAddCard, handleAddFormSubmit);
+popupWithAddForm.setEventListeners();
 
-//open phootocard
+//open photocard
 function handleCardClick(name, link) {
   const popupWithImage = new PopupWithImage(popupElementOpenImage, name, link);
   popupWithImage.open();
   popupWithImage.setEventListeners();
 }
-
-
-
-//------POPUP SUBMIT
 
 // Обработчик отправки формы профиля
 function handleProfileFormSubmit () {
@@ -57,10 +30,8 @@ function handleProfileFormSubmit () {
   userInfo.setUserInfo(); //writeNameAndJobToProfile
 }
 
-
 //Обработчик отправки формы добавления карточки
 function handleAddFormSubmit (cardInfo) {
-
   const newCard = new Section({ 
     items: cardInfo,
     renderer: () => {},
@@ -70,16 +41,7 @@ function handleAddFormSubmit (cardInfo) {
   newCard.addItem(myCardElement);
 }
 
-
-
-const popupWithEditForm = new PopupWithForm(popupElementEditProfile, handleProfileFormSubmit);
-popupWithEditForm.setEventListeners();
-const popupWithAddForm = new PopupWithForm(popupElementAddCard, handleAddFormSubmit);
-popupWithAddForm.setEventListeners();
-
-
-
-//open popups
+//open profile popup
 popupOpenButtonElement.addEventListener('click', function() {
   const popupWithForm = new PopupWithForm(popupElementEditProfile, handleProfileFormSubmit);
   popupWithForm.open();
@@ -89,13 +51,12 @@ popupOpenButtonElement.addEventListener('click', function() {
   formValidators['popup__profile-content'].resetValidation();
 });
 
+//open card popup
 popupAddButtonElement.addEventListener('click', function() {
   const popupWithForm = new PopupWithForm(popupElementAddCard, handleAddFormSubmit);
   popupWithForm.open();
   formValidators['popup__card-content'].resetValidation();
 });
-
-
 
 //display first cards
 const firstCards = new Section({ 
@@ -110,13 +71,10 @@ const firstCards = new Section({
 firstCards.renderItems();
 
 
-
 //VALIDATION 
-
 const formValidators = {}
 
-// Включение валидации
-const enableValidationn = (config) => {
+const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
     const validator = new FormValidator(config, formElement);
@@ -127,4 +85,4 @@ const enableValidationn = (config) => {
   });
 };
 
-enableValidationn(settings);
+enableValidation(settings);

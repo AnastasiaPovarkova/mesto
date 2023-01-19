@@ -1,4 +1,4 @@
-import { profileName, profileProfession } from './index.js';
+import { profileName, profileProfession } from './constants.js';
 
 export default class UserInfo {
   constructor(userName, userProfession) {
@@ -9,8 +9,8 @@ export default class UserInfo {
   getUserInfo() { //возвращает объект с данными пользователя
 
     this._profileInfo = {
-      name: this._userName,
-      profession: this._userProfession
+      name: profileName.textContent,
+      profession: profileProfession.textContent
     };
     return this._profileInfo;
   }
