@@ -1,14 +1,16 @@
+import './pages/index.css';
+
 import { settings, popupElementEditProfile, popupElementAddCard, popupOpenButtonElement, 
-  popupAddButtonElement, popupElementOpenImage, nameInput, jobInput } from '../scripts/constants.js'
-import { initialCards } from '../scripts/initial-сards.js'
+  popupAddButtonElement, popupElementOpenImage, nameInput, jobInput } from './scripts/constants.js'
+import { initialCards } from './scripts/initial-сards.js'
 
-import Card from '../scripts/Card.js';
-import FormValidator from '../scripts/FormValidator.js';
+import Card from './scripts/Card.js';
+import FormValidator from './scripts/FormValidator.js';
 
-import Section from '../scripts/Section.js';
-import PopupWithImage from '../scripts/PopupWithImage.js';
-import PopupWithForm from '../scripts/PopupWithForm.js';
-import UserInfo from '../scripts/UserInfo.js';
+import Section from './scripts/Section.js';
+import PopupWithImage from './scripts/PopupWithImage.js';
+import PopupWithForm from './scripts/PopupWithForm.js';
+import UserInfo from './scripts/UserInfo.js';
 
 
 //Listeners 
