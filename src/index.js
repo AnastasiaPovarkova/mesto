@@ -1,8 +1,8 @@
 import './pages/index.css';
 
-import { settings, popupElementEditProfile, popupElementAddCard, popupOpenButtonElement, 
-  popupAddButtonElement, popupElementOpenImage, nameInput, jobInput } from './scripts/constants.js'
-import { initialCards } from './scripts/initial-сards.js'
+import { settings, popupOpenButtonElement, popupAddButtonElement, nameInput, 
+  jobInput, profileName, profileProfession, popupElementImage, popupElementText } from './utils/constants.js'
+import { initialCards } from './utils/initial-сards.js'
 
 import Card from './scripts/Card.js';
 import FormValidator from './scripts/FormValidator.js';
@@ -14,63 +14,64 @@ import UserInfo from './scripts/UserInfo.js';
 
 
 //Listeners 
-const popupWithEditForm = new PopupWithForm(popupElementEditProfile, handleProfileFormSubmit);
+const popupWithEditForm = new PopupWithForm('.popup_edit-profile', handleProfileFormSubmit);
 popupWithEditForm.setEventListeners();
-const popupWithAddForm = new PopupWithForm(popupElementAddCard, handleAddFormSubmit);
+const popupWithAddForm = new PopupWithForm('.popup_add-card', handleAddFormSubmit);
 popupWithAddForm.setEventListeners();
+const popupWithImage = new PopupWithImage('.popup_open-card', popupElementImage, popupElementText);
+popupWithImage.setEventListeners();
+
+const userInfo = new UserInfo(profileName, profileProfession); 
+
+
+//display first cards
+const cards = new Section({ 
+  items: initialCards,
+  renderer: (cardItem) => {
+    cards.addItem(createCard(cardItem));
+  },
+}, '.elements');
+cards.renderItems();
+
+//create card
+function createCard(cardItem) {
+  const card = new Card(cardItem, '#element-template', handleCardClick);
+  const myCardElement = card.generateCard();
+  return myCardElement
+}
 
 //open photocard
 function handleCardClick(name, link) {
-  const popupWithImage = new PopupWithImage(popupElementOpenImage, name, link);
-  popupWithImage.open();
-  popupWithImage.setEventListeners();
+  popupWithImage.open(name, link);
 }
 
 // Обработчик отправки формы профиля
-function handleProfileFormSubmit () {
-  const userInfo = new UserInfo(nameInput, jobInput); 
-  userInfo.setUserInfo(); //writeNameAndJobToProfile
+function handleProfileFormSubmit (data) {
+  console.log(data);
+  userInfo.setUserInfo(data.name, data.profession); //writeNameAndJobToProfile
 }
 
 //Обработчик отправки формы добавления карточки
 function handleAddFormSubmit (cardInfo) {
-  const newCard = new Section({ 
-    items: cardInfo,
-    renderer: () => {},
-    }, '.elements');
-  const card = new Card(cardInfo, '#element-template', handleCardClick);
-  const myCardElement = card.generateCard();
-  newCard.addItem(myCardElement);
+  cards.addItem(createCard(cardInfo));
 }
 
 //open profile popup
 popupOpenButtonElement.addEventListener('click', function() {
-  const popupWithForm = new PopupWithForm(popupElementEditProfile, handleProfileFormSubmit);
-  popupWithForm.open();
-  const userInfo = new UserInfo(nameInput, jobInput); 
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().profession;
+  popupWithEditForm.open();
+  const info = userInfo.getUserInfo();
+  nameInput.value = info.name;
+  jobInput.value = info.profession; 
   formValidators['popup__profile-content'].resetValidation();
 });
 
 //open card popup
 popupAddButtonElement.addEventListener('click', function() {
-  const popupWithForm = new PopupWithForm(popupElementAddCard, handleAddFormSubmit);
-  popupWithForm.open();
+  popupWithAddForm.open();
   formValidators['popup__card-content'].resetValidation();
 });
 
-//display first cards
-const firstCards = new Section({ 
-  items: initialCards,
-  renderer: (cardItem) => {
-    const card = new Card(cardItem, '#element-template', handleCardClick);
-    const myCardElement = card.generateCard();
 
-    firstCards.addItem(myCardElement);
-  },
-}, '.elements');
-firstCards.renderItems();
 
 
 //VALIDATION 

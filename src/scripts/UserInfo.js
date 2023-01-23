@@ -1,22 +1,20 @@
-import { profileName, profileProfession } from './constants.js';
-
 export default class UserInfo {
-  constructor(userName, userProfession) {
-  this._userName = userName.value;
-  this._userProfession = userProfession.value;
+  constructor(profileName, profileProfession) {
+  this._profileName = profileName;
+  this._profileProfession = profileProfession;
   }
 
   getUserInfo() { //возвращает объект с данными пользователя
 
     this._profileInfo = {
-      name: profileName.textContent,
-      profession: profileProfession.textContent
+      name: this._profileName.textContent,
+      profession: this._profileProfession.textContent
     };
     return this._profileInfo;
   }
     
-  setUserInfo() { //принимает новые данные пользователя и добавляет их на страницу
-    profileName.textContent = this._userName;
-    profileProfession.textContent = this._userProfession;
+  setUserInfo(userName, userProfession) { //принимает новые данные пользователя и добавляет их на страницу
+    this._profileName.textContent = userName;
+    this._profileProfession.textContent = userProfession;
   }
 }
