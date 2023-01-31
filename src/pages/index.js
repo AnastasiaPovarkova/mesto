@@ -13,6 +13,18 @@ import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
 
 
+fetch('https://nomoreparties.co/v1/cohort-59/users/me', {
+  method: 'GET',
+  headers: {
+  authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  }); 
+
+
 //Listeners 
 const popupWithEditForm = new PopupWithForm('.popup_edit-profile', handleProfileFormSubmit);
 popupWithEditForm.setEventListeners();
