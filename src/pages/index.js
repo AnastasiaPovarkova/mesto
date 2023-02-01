@@ -13,16 +13,64 @@ import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
 
 
-fetch('https://nomoreparties.co/v1/cohort-59/users/me', {
-  method: 'GET',
-  headers: {
-  authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
+class Api {
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
   }
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  }); 
+
+  getUserInfo() {
+    fetch('https://nomoreparties.co/v1/cohort-59/users/me', {
+      method: 'GET',
+      headers: {
+      authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
+      }
+    })
+      .then(res => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((fail) => {
+        console.log('Sorry ' + fail);
+      }); 
+  }
+
+  getInitialCards() {
+    
+  }
+
+  changeUserInfo() {
+    fetch('https://mesto.nomoreparties.co/v1/cohort-59/users/me', {
+      method: 'PATCH',
+      headers: {
+        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        //name: 'Marie Skłodowska Curie',
+        name: 'Masha',
+        about: 'Physicist and Chemist'
+      })
+    })
+      .then((res) => {
+        console.log('все ок' + res);
+      })
+      .catch((fail) => {
+        console.log('Sorry ' + fail);
+      });
+  }
+
+}
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
+  headers: {
+    authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
+    'Content-Type': 'application/json'
+  }
+}); 
+
+api.changeUserInfo();
+api.getUserInfo();
 
 
 //Listeners 
