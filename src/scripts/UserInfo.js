@@ -4,14 +4,14 @@ export default class UserInfo {
   this._profileProfession = profileProfession;
   }
 
-  getUserInfo() { //возвращает объект с данными пользователя
+  // getUserInfo() { //возвращает объект с данными пользователя
 
-    this._profileInfo = {
-      name: this._profileName.textContent,
-      profession: this._profileProfession.textContent
-    };
-    return this._profileInfo;
-  }
+  //   this._profileInfo = {
+  //     name: this._profileName.textContent,
+  //     profession: this._profileProfession.textContent
+  //   };
+  //   return this._profileInfo;
+  // }
     
   setUserInfo(userName, userProfession) { //принимает новые данные пользователя и добавляет их на страницу
     this._profileName.textContent = userName;

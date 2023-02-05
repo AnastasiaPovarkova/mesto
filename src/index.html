@@ -19,10 +19,10 @@
       <img class="profile__avatar" src="<%=require('./images/profile__avatar.jpg')%>" alt="аватар">
       <div class="profile__info">
         <div class="profile__title">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button type="button" aria-label="Редактировать" class="profile__edit-button"></button>
         </div>
-        <p class="profile__profession">Исследователь океана</p>
+        <p class="profile__profession"></p>
       </div>
       <button type="button" aria-label="Добавить фотокарточку" class="profile__add-button"></button>
     </section> 
@@ -43,7 +43,10 @@
       <img class="element__image" src="./images/Element__image1.png" alt="фото">
       <div class="element__group">
         <h2 class="element__text"></h2>
-        <button type="button" aria-label="Нравится" class="element__like"></button>
+        <div class="element__likes">
+          <button type="button" aria-label="Нравится" class="element__like"></button>
+          <div class="element__count">0</div>
+        </div>
       </div>
     </div>
   </template>
@@ -55,7 +58,7 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <input type="text" id="name-field" class="popup__field popup__field_input_name" minlength="2" maxlength="40" required placeholder="Ваше имя" name="name" value="Жак-Ив Кусто">
         <span class="name-field-error popup__field-error"></span>
-        <input type="text" id="profession-field" class="popup__field popup__field_input_profession" minlength="2" maxlength="200" required placeholder="Ваша профессия" name="profession" value="Исследователь океана">
+        <input type="text" id="profession-field" class="popup__field popup__field_input_profession" minlength="2" maxlength="200" required placeholder="Ваша профессия" name="about" value="Исследователь океана">
         <span class="profession-field-error popup__field-error"></span>
         <button type="submit" class="popup__submit" name="submit" value="Сохранить">Сохранить</button>
       </form>
@@ -67,7 +70,7 @@
       <button type="button" aria-label="Закрыть" class="popup__close"></button>
       <form name="popup__card-content" id="popup__card-content" class="popup__content" novalidate>
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" id="card-field" class="popup__field popup__field_input_card" minlength="2" maxlength="30" required placeholder="Название" name="cardName" value="">
+        <input type="text" id="card-field" class="popup__field popup__field_input_card" minlength="2" maxlength="30" required placeholder="Название" name="name" value="">
         <span class="card-field-error popup__field-error"></span>
         <input type="url" id="link-field" class="popup__field popup__field_input_link" required placeholder="Ссылка на картинку" name="link" value="">
         <span class="link-field-error popup__field-error"></span>
@@ -81,6 +84,16 @@
       <img class="popup__image" src="./images/Element__Kazan.jpg" alt="фото">
       <button type="button" aria-label="Закрыть" class="popup__close"></button>
       <h2 class="popup__text">Фото</h2>
+    </div>
+  </div>
+
+  <div class="popup popup_delete-card">
+    <div class="popup__container">
+      <button type="button" aria-label="Закрыть" class="popup__close"></button>
+      <form name="popup__delete-confirmation" id="popup__profile-confirmation" class="popup__content" novalidate>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <button type="submit" class="popup__submit popup__submit-delete" name="submit" value="Да">Да</button>
+      </form>
     </div>
   </div>
 
