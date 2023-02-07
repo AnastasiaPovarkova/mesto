@@ -30,7 +30,7 @@ export default class Api {
   }      
     
   changeUserInfo(data) {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-59/users/me', {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/users/me', {
       method: 'PATCH',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
@@ -41,9 +41,7 @@ export default class Api {
         about: data.about
       })
     })
-      .then((res) => {
-        console.log('все ок' + res);
-      })
+      .then((res) => res.ok ? res.json() : Promise.reject())
       .catch((fail) => {
         console.log('Sorry ' + fail);
       });
@@ -74,7 +72,55 @@ export default class Api {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
       }
     })
-    
+      .then((res) => {
+        console.log('Карточка удалена' + res);
+      })
+      .catch((fail) => {
+        console.log('Sorry ' + fail);
+      });
+  }
+
+  likeCard = (cardId) => {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/cards/'+ cardId +'/likes', {
+      method: 'PUT',
+      headers: {
+        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
+      }
+    })
+      .then((res) => res.ok ? res.json() : Promise.reject())
+      .catch((fail) => {
+        console.log('Ошибка лайка'+ fail);
+      });
+  }
+
+  unlikeCard = (cardId) => {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/cards/'+ cardId +'/likes', {
+      method: 'DELETE',
+      headers: {
+        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
+      }
+    })
+      .then((res) => res.ok ? res.json() : Promise.reject())
+      .catch((fail) => {
+        console.log('Ошибка анлайка'+ fail);
+      });
+  }
+
+  editAvatar = (data) => {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/users/me/avatar', {
+      method: 'PATCH',
+      headers: {
+        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify({
+        avatar: data.link
+      })
+    })
+      .then((res) => res.ok ? res.json() : Promise.reject())
+      .catch((fail) => {
+        console.log('Ошибка редактирования аватара'+ fail);
+      });
   }
 }
 

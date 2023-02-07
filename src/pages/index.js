@@ -1,8 +1,7 @@
 import './index.css';
 
 import { settings, popupOpenButtonElement, popupAddButtonElement, nameInput, 
-  jobInput, profileName, profileProfession, popupElementImage, popupElementText } from '../utils/constants.js'
-//import { initialCards } from '../utils/initial-сards.js'
+  jobInput, profileName, profileProfession, popupElementImage, popupElementText, profileAvatar, profileImage } from '../utils/constants.js'
 
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
@@ -24,11 +23,15 @@ const api = new Api({
 
 let myProfileData = {};
 
-api.getUserInfo() //заполняем данные профиля, взятые из сервера и добавляем карточки с сервера
+api.getUserInfo() //заполняем аватар, данные профиля, взятые из сервера и добавляем карточки с сервера
   .then(res => {
     console.log(res);
-    handleProfileFormSubmit(res);
+    api.changeUserInfo(res)
+      .then(res => {
+        userInfo.setUserInfo(res.name, res.about); //writeNameAndJobToProfile
+      })
     myProfileData = res;
+    profileImage.src = res.avatar;
     api.getInitialCards()
       .then(res => {
         cards.renderItems(res);
@@ -54,52 +57,100 @@ const popupWithDeleteConfirmationForm = new PopupWithForm('.popup_delete-card', 
 popupWithDeleteConfirmationForm.setEventListeners();
 const popupWithImage = new PopupWithImage('.popup_open-card', popupElementImage, popupElementText);
 popupWithImage.setEventListeners();
+const popupEditAvatar = new PopupWithForm('.popup_edit-avatar', handleEditAvatarSubmit);
+popupEditAvatar.setEventListeners();
 
 const userInfo = new UserInfo(profileName, profileProfession); 
 
 
 //create card
 function createCard(cardItem) {
-  const card = new Card(cardItem, '#element-template', handleCardClick, handleTrashClick, myProfileData);
+  const card = new Card(cardItem, '#element-template', handleCardClick, handleTrashClick, myProfileData, handleLikeCard, handleUnLikeCard, isCardLikedByMe);
   const myCardElement = card.generateCard();
   return myCardElement
 }
 
 // Обработчик отправки формы профиля
-function handleProfileFormSubmit (data) {
-  api.changeUserInfo(data);
-  userInfo.setUserInfo(data.name, data.about); //writeNameAndJobToProfile
+function handleProfileFormSubmit (data, submitButton) {
+  submitButton.textContent = 'Сохранение...';
+  api.changeUserInfo(data)
+    .then(res => {
+      userInfo.setUserInfo(res.name, res.about); //writeNameAndJobToProfile
+    })
+    .finally(() => {
+      submitButton.textContent = 'Сохранить'
+    })
 }
 
 //Обработчик отправки формы добавления карточки
-function handleAddFormSubmit(cardInfo) {
+function handleAddFormSubmit(cardInfo, submitButton) {
+  submitButton.textContent = 'Сохранение...';
   api.addNewCard(cardInfo)
-     .then(res => {
+    .then(res => {
        cards.addItem(createCard(res));
      })
+    .finally(() => {
+      submitButton.textContent = 'Сохранить'
+    })
 }
+
 let deleteCard = '';
 let deleteCardId = '';
 
+//delete card from server and DOM
 function handleDeleteCardSubmit(smt) {
   api.deleteCard(deleteCardId)
-    .then(res => {
-      console.log(res);
+    .then(() => {
       deleteCard.remove();
     })
-  
 }
 
+function isCardLikedByMe(likes, myID) {
+  likes.some(like => like._id === myID)
+}
+
+function handleLikeCard(cardId, counter, likes) {
+  api.likeCard(cardId)
+    .then(res => {
+      this._likeButton.classList.add('element__like_liked');
+      likes = res.likes;
+      console.log(likes);
+      counter.textContent = likes.length;
+    })
+}
+
+function handleUnLikeCard(cardId, counter, likes) {
+  api.unlikeCard(cardId)
+    .then(res => {
+      console.log('unlike')
+      this._likeButton.classList.remove('element__like_liked');
+      likes = res.likes;
+      counter.textContent = likes.length;
+    })
+}
+
+//open deleting card popup
 function handleTrashClick(element, cardId) {
   deleteCard = element;
   deleteCardId = cardId;
-  console.log(deleteCardId);
   popupWithDeleteConfirmationForm.open();
 }
 
 //open photocard
 function handleCardClick(name, link) {
   popupWithImage.open(name, link);
+}
+
+function handleEditAvatarSubmit(data, submitButton) {
+  submitButton.textContent = 'Сохранение...';
+  api.editAvatar(data)
+    .then(res => {
+      console.log(res);
+      profileImage.src = res.avatar;
+    })
+    .finally(() => {
+      submitButton.textContent = 'Сохранить'
+    })
 }
 
 
@@ -121,6 +172,9 @@ popupAddButtonElement.addEventListener('click', function() {
   formValidators['popup__card-content'].resetValidation();
 });
 
+profileAvatar.addEventListener('click', function() {
+  popupEditAvatar.open();
+})
 
 
 //VALIDATION 

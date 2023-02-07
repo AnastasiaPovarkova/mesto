@@ -1,6 +1,6 @@
 export default class Card {
 
-    constructor(data, templateSelector, handleCardClick, handleTrashClick, myData) {
+    constructor(data, templateSelector, handleCardClick, handleTrashClick, myData, handleLikeCard, handleUnLikeCard, isCardLikedByMe) {
       this._name = data.name;
       this._link = data.link;
       this._likes = data.likes;
@@ -10,6 +10,8 @@ export default class Card {
       this._templateSelector = templateSelector;
       this._handleCardClick = handleCardClick;
       this._handleTrashClick = handleTrashClick;
+      this._handleLikeCard = handleLikeCard;
+      this._handleUnLikeCard = handleUnLikeCard;
     }
   
     _getTemplate() {
@@ -36,6 +38,12 @@ export default class Card {
         this._element.querySelector('.element__trash').remove();
       }
 
+      this._likes.forEach((like) => {
+        if (like._id === this._myProfileId) {
+          this._likeButton.classList.add('element__like_liked')
+        } 
+      })
+
       return this._element // Вернём элемент наружу
     }
   
@@ -45,7 +53,6 @@ export default class Card {
       });
       this._element.querySelector('.element__trash').addEventListener('click', () => {
         this._handleTrashClick(this._element.closest('.element'), this._cardId);
-        //this._deleteCard();
       });
       this._cardImage.addEventListener('click', () => {
         this._handleCardClick(this._name, this._link);
@@ -53,10 +60,22 @@ export default class Card {
     }
   
     _likeToggle() {
-      this._likeButton.classList.toggle('element__like_liked');
-    }
-  
-    _deleteCard() {
-      this._element.closest('.element').remove();
-    }
+      //this._likeButton.classList.toggle('element__like_liked');
+      const likedByMe = false;
+      if (this._likes.length === 0) {
+        this._handleLikeCard(this._cardId, this._likesCount, this._likes)
+      } /*else {
+        this._likes.forEach((like) => {
+          if (like._id === this._myProfileId) {
+            return likedByMe = true;
+          }
+        })*/
+
+        if (likedByMe) {
+          this._handleUnLikeCard(this._cardId, this._likesCount, this._likes);
+        } else {
+          this._handleUnLikeCard(this._cardId, this._likesCount, this._likes);
+        }
+      }
+
 }

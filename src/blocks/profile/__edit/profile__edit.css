@@ -1,0 +1,4 @@
+.profile__edit {
+  position: absolute;
+  z-index: -1;
+}

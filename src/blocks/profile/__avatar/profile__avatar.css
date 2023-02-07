@@ -2,10 +2,14 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  transition: opacity 0.3s;
+  background-image: url(../../../images/AvatarEditCoursor.svg);
+  cursor: pointer;
+  position: absolute;
 }
 
-@media screen and (max-width: 960px) {
-  .profile__avatar{
-    margin-bottom: 26px;
-  }
+.profile__avatar:hover {
+  opacity: 0.2;
 }
+
+

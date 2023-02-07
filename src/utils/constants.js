@@ -20,3 +20,6 @@ export const profileProfession = document.querySelector('.profile__profession');
 const popupElementOpenImage = document.querySelector('.popup_open-card');
 export const popupElementImage = popupElementOpenImage.querySelector('.popup__image');
 export const popupElementText = popupElementOpenImage.querySelector('.popup__text');
+
+export const profileAvatar = document.querySelector('.profile__image');
+export const profileImage = document.querySelector('.profile__avatar');

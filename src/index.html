@@ -16,7 +16,10 @@
   <main class="content">
 
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/profile__avatar.jpg')%>" alt="аватар">
+      <div class="profile__image">
+        <img class="profile__avatar" src="https://images.unsplash.com/photo-1548697143-6a9dc9d9d80f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80" alt="аватар"> 
+        <img class="profile__edit" src="<%=require('./images/AvatarEditCoursor.svg')%>" alt="кнопка редактирования">
+      </div>
       <div class="profile__info">
         <div class="profile__title">
           <h1 class="profile__name"></h1>
@@ -40,7 +43,7 @@
   <template id="element-template">
     <div class="element">
       <button type="button" aria-label="Удалить" class="element__trash"></button>
-      <img class="element__image" src="./images/Element__image1.png" alt="фото">
+      <img class="element__image" src="" alt="фото">
       <div class="element__group">
         <h2 class="element__text"></h2>
         <div class="element__likes">
@@ -50,6 +53,18 @@
       </div>
     </div>
   </template>
+
+  <div class="popup popup_edit-avatar">
+    <div class="popup__container">
+      <button type="button" aria-label="Закрыть" class="popup__close"></button>
+      <form name="popup__avatar-content" id="popup__avatar-content" class="popup__content" novalidate>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <input type="url" id="avatar-field" class="popup__field popup__field_input_avatar" required placeholder="Ссылка на аватар" name="link" value="">
+        <span class="avatar-field-error popup__field-error"></span>
+        <button type="submit" class="popup__submit" name="submit" value="Сохранить">Сохранить</button>
+      </form>
+    </div>
+  </div>
 
   <div class="popup popup_edit-profile">
     <div class="popup__container">
@@ -81,7 +96,7 @@
 
   <div class="popup popup_open-card">
     <div class="popup__element">
-      <img class="popup__image" src="./images/Element__Kazan.jpg" alt="фото">
+      <img class="popup__image" src="" alt="фото">
       <button type="button" aria-label="Закрыть" class="popup__close"></button>
       <h2 class="popup__text">Фото</h2>
     </div>
