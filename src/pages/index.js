@@ -5,7 +5,6 @@ import { settings, popupOpenButtonElement, popupAddButtonElement, nameInput,
 
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
-
 import Section from '../scripts/Section.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWithForm from '../scripts/PopupWithForm.js';
@@ -25,7 +24,6 @@ let myProfileData = {};
 
 api.getUserInfo() //заполняем аватар, данные профиля, взятые из сервера и добавляем карточки с сервера
   .then(res => {
-    console.log(res);
     api.changeUserInfo(res)
       .then(res => {
         userInfo.setUserInfo(res.name, res.about); //writeNameAndJobToProfile
@@ -65,7 +63,7 @@ const userInfo = new UserInfo(profileName, profileProfession);
 
 //create card
 function createCard(cardItem) {
-  const card = new Card(cardItem, '#element-template', handleCardClick, handleTrashClick, myProfileData, handleLikeCard, handleUnLikeCard, isCardLikedByMe);
+  const card = new Card(cardItem, '#element-template', handleCardClick, handleTrashClick, myProfileData, handleLikeCard, handleUnLikeCard);
   const myCardElement = card.generateCard();
   return myCardElement
 }
@@ -105,27 +103,24 @@ function handleDeleteCardSubmit(smt) {
     })
 }
 
-function isCardLikedByMe(likes, myID) {
-  likes.some(like => like._id === myID)
-}
 
-function handleLikeCard(cardId, counter, likes) {
-  api.likeCard(cardId)
+function handleLikeCard(cardId, counter) {
+  return api.likeCard(cardId)
     .then(res => {
       this._likeButton.classList.add('element__like_liked');
-      likes = res.likes;
-      console.log(likes);
-      counter.textContent = likes.length;
+      console.log('like', res);
+      counter.textContent = res.likes.length;
+      return res;
     })
 }
 
-function handleUnLikeCard(cardId, counter, likes) {
-  api.unlikeCard(cardId)
+function handleUnLikeCard(cardId, counter) {
+  return api.unlikeCard(cardId)
     .then(res => {
-      console.log('unlike')
+      console.log('unlike', res)
       this._likeButton.classList.remove('element__like_liked');
-      likes = res.likes;
-      counter.textContent = likes.length;
+      counter.textContent = res.likes.length;
+      return res;
     })
 }
 
@@ -145,7 +140,6 @@ function handleEditAvatarSubmit(data, submitButton) {
   submitButton.textContent = 'Сохранение...';
   api.editAvatar(data)
     .then(res => {
-      console.log(res);
       profileImage.src = res.avatar;
     })
     .finally(() => {
@@ -159,7 +153,6 @@ popupOpenButtonElement.addEventListener('click', function() {
   popupWithEditForm.open();
   api.getUserInfo()
     .then(res => {
-      console.log(res);
       nameInput.value = res.name;
       jobInput.value = res.about; 
     }); 

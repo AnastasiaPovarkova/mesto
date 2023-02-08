@@ -1,6 +1,6 @@
 export default class Card {
 
-    constructor(data, templateSelector, handleCardClick, handleTrashClick, myData, handleLikeCard, handleUnLikeCard, isCardLikedByMe) {
+    constructor(data, templateSelector, handleCardClick, handleTrashClick, myData, handleLikeCard, handleUnLikeCard) {
       this._name = data.name;
       this._link = data.link;
       this._likes = data.likes;
@@ -58,24 +58,23 @@ export default class Card {
         this._handleCardClick(this._name, this._link);
       });
     }
+
+    _isCardLikedByMe() {
+      return this._likes.some(like => like._id === this._myProfileId);
+    }
   
     _likeToggle() {
-      //this._likeButton.classList.toggle('element__like_liked');
-      const likedByMe = false;
-      if (this._likes.length === 0) {
-        this._handleLikeCard(this._cardId, this._likesCount, this._likes)
-      } /*else {
-        this._likes.forEach((like) => {
-          if (like._id === this._myProfileId) {
-            return likedByMe = true;
-          }
-        })*/
-
-        if (likedByMe) {
-          this._handleUnLikeCard(this._cardId, this._likesCount, this._likes);
-        } else {
-          this._handleUnLikeCard(this._cardId, this._likesCount, this._likes);
-        }
+      if (this._isCardLikedByMe()) {
+        this._handleUnLikeCard(this._cardId, this._likesCount)
+          .then(res => {
+            this._likes = res.likes;
+          });
+      } else {
+        this._handleLikeCard(this._cardId, this._likesCount)
+          .then(res => {
+            this._likes = res.likes;
+          });
       }
+    }
 
 }
