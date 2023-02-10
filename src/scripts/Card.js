@@ -66,15 +66,17 @@ export default class Card {
     _likeToggle() {
       if (this._isCardLikedByMe()) {
         this._handleUnLikeCard(this._cardId, this._likesCount)
-          .then(res => {
-            this._likes = res.likes;
-          });
       } else {
         this._handleLikeCard(this._cardId, this._likesCount)
-          .then(res => {
-            this._likes = res.likes;
-          });
       }
+    }
+
+    likeCardInDom = () => {
+      this._likeButton.classList.add('element__like_liked');
+    }
+
+    dislikeCardInDom = () => {
+      this._likeButton.classList.remove('element__like_liked');
     }
 
 }

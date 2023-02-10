@@ -2,35 +2,36 @@ export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
   }
+
+  _getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
+  }
   
   getUserInfo = () => {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/users/me', {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
       authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject())
-      .catch((err) => {
-        console.log(err);
-      }); 
+      .then(res => this._getResponseData(res))
   }
   
   getInitialCards = () => {
-    return fetch('https://nomoreparties.co/v1/cohort-59/cards', {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject())
-      .catch((err) => {
-        console.log(err);
-    }); 
+      .then(res => this._getResponseData(res))
   }      
     
   changeUserInfo(data) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/users/me', {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
@@ -41,14 +42,11 @@ export default class Api {
         about: data.about
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject())
-      .catch((fail) => {
-        console.log('Sorry ' + fail);
-      });
+      .then(res => this._getResponseData(res))
   }
 
   addNewCard = (data) => {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/cards', {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
@@ -59,55 +57,41 @@ export default class Api {
         link: data.link
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject())
-      .catch((fail) => {
-        console.log('Sorry ' + fail);
-      });
+      .then(res => this._getResponseData(res))
   }
 
   deleteCard = (cardId) => {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/cards/'+ cardId, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
       }
     })
-      .then((res) => {
-        console.log('Карточка удалена' + res);
-      })
-      .catch((fail) => {
-        console.log('Sorry ' + fail);
-      });
+      .then(res => this._getResponseData(res))
   }
 
   likeCard = (cardId) => {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/cards/'+ cardId +'/likes', {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
       }
     })
-      .then((res) => res.ok ? res.json() : Promise.reject())
-      .catch((fail) => {
-        console.log('Ошибка лайка'+ fail);
-      });
+      .then(res => this._getResponseData(res))
   }
 
   unlikeCard = (cardId) => {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/cards/'+ cardId +'/likes', {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
       }
     })
-      .then((res) => res.ok ? res.json() : Promise.reject())
-      .catch((fail) => {
-        console.log('Ошибка анлайка'+ fail);
-      });
+      .then(res => this._getResponseData(res))
   }
 
   editAvatar = (data) => {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-59/users/me/avatar', {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
@@ -117,10 +101,7 @@ export default class Api {
         avatar: data.link
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject())
-      .catch((fail) => {
-        console.log('Ошибка редактирования аватара'+ fail);
-      });
+      .then(res => this._getResponseData(res))
   }
 }
 
