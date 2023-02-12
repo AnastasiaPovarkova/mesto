@@ -1,9 +1,12 @@
 export default class UserInfo {
-  constructor(profileName, profileProfession, profileAvatar, data) {
+  constructor(profileName, profileProfession, profileAvatar) {
   this._profileName = profileName;
   this._profileProfession = profileProfession;
   this._profileAvatar = profileAvatar;
-  this._profileData = data;
+  }
+
+  setData(data) {
+    this._profileData = data;
   }
 
   getUserInfo() { //возвращает объект с данными пользователя
@@ -20,7 +23,6 @@ export default class UserInfo {
   setUserInfo(userName, userProfession) { //принимает новые данные пользователя и добавляет их на страницу
     this._profileName.textContent = userName;
     this._profileProfession.textContent = userProfession;
-    
   }
 
   setAvatar(userAvatar) {

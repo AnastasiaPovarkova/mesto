@@ -7,11 +7,6 @@ export default class Section {
   addItem(element) {
     this._container.prepend(element);
   }
-
-  deleteCard(cardElement) {
-    //this._element.closest('.element').remove();
-    cardElement.remove();
-  }
     
   renderItems(serverCards) {
     serverCards.forEach(item => {

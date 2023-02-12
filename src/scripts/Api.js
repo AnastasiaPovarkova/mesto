@@ -1,6 +1,7 @@
 export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
   }
 
   _getResponseData(res) {
@@ -13,9 +14,7 @@ export default class Api {
   getUserInfo = () => {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      headers: {
-      authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
-      }
+      headers: this._headers
     })
       .then(res => this._getResponseData(res))
   }
@@ -23,9 +22,7 @@ export default class Api {
   getInitialCards = () => {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
-      headers: {
-        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
-      }
+      headers: this._headers
     })
       .then(res => this._getResponseData(res))
   }      
@@ -33,10 +30,7 @@ export default class Api {
   changeUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -48,10 +42,7 @@ export default class Api {
   addNewCard = (data) => {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -63,9 +54,7 @@ export default class Api {
   deleteCard = (cardId) => {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
-      }
+      headers: this._headers
     })
       .then(res => this._getResponseData(res))
   }
@@ -73,9 +62,7 @@ export default class Api {
   likeCard = (cardId) => {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: {
-        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
-      }
+      headers: this._headers
     })
       .then(res => this._getResponseData(res))
   }
@@ -83,9 +70,7 @@ export default class Api {
   unlikeCard = (cardId) => {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: {
-        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537'
-      }
+      headers: this._headers
     })
       .then(res => this._getResponseData(res))
   }
@@ -93,10 +78,7 @@ export default class Api {
   editAvatar = (data) => {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: 'd2287a93-13da-4c7a-9dc9-db17e7519537',
-        'Content-Type': 'application/json'
-      }, 
+      headers: this._headers, 
       body: JSON.stringify({
         avatar: data.link
       })
@@ -104,5 +86,3 @@ export default class Api {
       .then(res => this._getResponseData(res))
   }
 }
-
- 

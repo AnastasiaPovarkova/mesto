@@ -52,7 +52,7 @@ export default class Card {
         this._likeToggle();
       });
       this._element.querySelector('.element__trash').addEventListener('click', () => {
-        this._handleTrashClick(this._element.closest('.element'), this._cardId);
+        this._handleTrashClick(this._cardId);
       });
       this._cardImage.addEventListener('click', () => {
         this._handleCardClick(this._name, this._link);
@@ -65,18 +65,26 @@ export default class Card {
   
     _likeToggle() {
       if (this._isCardLikedByMe()) {
-        this._handleUnLikeCard(this._cardId, this._likesCount)
+        this._handleUnLikeCard(this._cardId)
       } else {
-        this._handleLikeCard(this._cardId, this._likesCount)
+        this._handleLikeCard(this._cardId)
       }
     }
 
-    likeCardInDom = () => {
+    likeCardInDom = (res) => {
       this._likeButton.classList.add('element__like_liked');
+      this._likesCount.textContent = res.likes.length;
+      this._likes = res.likes;
     }
 
-    dislikeCardInDom = () => {
+    dislikeCardInDom = (res) => {
       this._likeButton.classList.remove('element__like_liked');
+      this._likesCount.textContent = res.likes.length;
+      this._likes = res.likes;
+    }
+
+    deleteCard() {
+      this._element.closest('.element').remove();
     }
 
 }
