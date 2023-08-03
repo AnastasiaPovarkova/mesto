@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>mesto</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="<%=require('./images/favicon-16x16.png')%>">
+  <title>Mesto</title>
 </head>
 
 <body class="page">
@@ -37,7 +38,7 @@
   </main> 
 
   <footer class="footer">
-    <p class="footer__copyright">&copy;&nbsp;2022 Mesto Russia</p>
+    <p class="footer__copyright">&copy;&nbsp;<script>document.write(new Date().getFullYear())</script> Mesto Russia</p>
   </footer> 
 
   <template id="element-template">
