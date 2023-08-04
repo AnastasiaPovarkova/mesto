@@ -42,4 +42,4 @@ ____
 
 Затем эти файлы можно разместить на любом сервере, т.е. использовать для деплоя веб-приложения в интернете.
 
-## Ссылка на GitHub Pages: [Mesto](https://anastasiapovarkova.github.io/mesto/)
+## Ссылка на GitHub Pages:  [Mesto](https://anastasiapovarkova.github.io/mesto/)
