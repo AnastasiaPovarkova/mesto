@@ -6,6 +6,7 @@
   background-image: url(../../../images/AvatarEditCoursor.svg);
   cursor: pointer;
   position: absolute;
+  object-fit: cover;
 }
 
 .profile__avatar:hover {
