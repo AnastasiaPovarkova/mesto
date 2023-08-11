@@ -1,4 +1,5 @@
 # Проект: Место
+#### Статус: сделано :white_check_mark: 
 
 <a href="https://anastasiapovarkova.github.io/mesto/" target="_blank">
     <img src="https://github.com/AnastasiaPovarkova/mesto/blob/main/src/images/screensaver.png?raw=true" width="900" title="Mesto" alt="Mesto"/>
