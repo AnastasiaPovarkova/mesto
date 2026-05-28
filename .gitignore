@@ -1,2 +1,8 @@
 node_modules
 dist
+venv/
+.pytest_cache/
+allure-results/
+allure-history/
+__pycache__/
+*.pyc
