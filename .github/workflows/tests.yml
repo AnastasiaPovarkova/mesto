@@ -20,6 +20,7 @@ jobs:
         python-state: '3.10'
 
     - name: Install dependencies
+      working-directory: tests_automation
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -30,7 +31,8 @@ jobs:
         sudo apt-get install -x11-apps -y google-chrome-stable
 
     - name: Run PyTest with Allure
-      # Запускаем тесты в Headless режиме (в conftest.py надо будет включить options.add_argument("--headless"))
+      working-directory: tests_automation
+      # Запускаем тесты в Headless режиме (в conftest.py нужно включить options.add_argument("--headless"))
       run: |
         pytest --alluredir=allure-results
       continue-on-error: true # Позволит продолжить сборку для генерации отчета, даже если тесты упали

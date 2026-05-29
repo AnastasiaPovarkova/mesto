@@ -7,8 +7,8 @@ from selenium.webdriver.chrome.options import Options
 @pytest.fixture(scope="function")
 def driver():
     options = Options()
-    # Раскомментируйте строчку ниже для запуска в GitHub Actions (без графического интерфейса)
-    # options.add_argument("--headless") 
+    # Раскомментируйте строчку --headless ниже для запуска в GitHub Actions (без графического интерфейса)
+    options.add_argument("--headless") 
     options.add_argument("--window-size=1280,800")
     options.add_argument("--incognito")
     
