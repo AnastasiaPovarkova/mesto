@@ -41,8 +41,8 @@ jobs:
       uses: actions/checkout@v4
       if: always()
       with:
-        ref: gh-pages
-        path: gh-pages
+        ref: gh-pages-reports
+        path: gh-pages-reports
 
     - name: Allure Report Action
       uses: simple-elf/allure-report-action@master
@@ -57,5 +57,5 @@ jobs:
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: gh-pages
+        PUBLISH_BRANCH: gh-pages-reports
         PUBLISH_DIR: allure-history
